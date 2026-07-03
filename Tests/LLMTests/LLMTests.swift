@@ -2,6 +2,7 @@ import Testing
 import Foundation
 @testable import LLM
 
+@MainActor
 final class LLMTests {
     //MARK: Template tests
     let systemPrompt = "You are a human."
