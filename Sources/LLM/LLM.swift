@@ -1299,7 +1299,7 @@ open class LLM: ObservableObject {
         self.repetitionLookback = repetitionLookback
         
         #if DEBUG
-        print("GNERATING WITH SEEED: \(seed)")
+        print("GENERATING WITH SEED: \(seed)")
         #endif
         var modelParams = llama_model_default_params()
         #if targetEnvironment(simulator)
@@ -1909,7 +1909,7 @@ package extension String {
 }
 
 extension [String] {
-    mutating func scoup(_ count: Int) {
+    mutating func scoop(_ count: Int) {
         guard 0 < count else { return }
         let firstIndex = count
         let lastIndex = count * 2

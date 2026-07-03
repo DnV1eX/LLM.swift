@@ -218,7 +218,7 @@ final class LLMTests {
     }
     
     @Test
-    func testInitializerWithTempate() async throws {
+    func testInitializerWithTemplate() async throws {
         let template = model.template
         let bot = try await LLM(from: model)!
         #expect(bot.preprocess(userPrompt, [], .none) == template.preprocess(userPrompt, [], .none))
@@ -477,7 +477,7 @@ final class LLMTests {
 
     @Generatable
     struct Temperature {
-        let degreesInCelcius: Double
+        let degreesInCelsius: Double
     }
 
     @Test
@@ -485,16 +485,16 @@ final class LLMTests {
         let bot = try await LLM(from: model)!
         
         let result = try await bot.respond(
-            to: "Coldest temperature below zero you can think of in Celsius, preferabably zero Kelvin in Celsius",
+            to: "Coldest temperature below zero you can think of in Celsius, preferably zero Kelvin in Celsius",
             as: Temperature.self
         )
         let temperature = result.value
         let output = result.rawOutput
         
         print(temperature)
-        let hasGivenNegative = temperature.degreesInCelcius < 0
+        let hasGivenNegative = temperature.degreesInCelsius < 0
         if !hasGivenNegative {
-            print("the temperature was not negative but \(temperature.degreesInCelcius). but probably because model is not capable enough")
+            print("the temperature was not negative but \(temperature.degreesInCelsius). but probably because model is not capable enough")
         }
         #expect(!output.isEmpty)
         
