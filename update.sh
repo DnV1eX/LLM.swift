@@ -39,9 +39,21 @@ if [ $(ls -1 "$LLAMA_CPP_DIR" | wc -l) -eq 1 ] && [ -d "$LLAMA_CPP_DIR/$(ls -1 "
     rm -rf "$NESTED_DIR"
 fi
 
+read -r -p "Remove debug symbols from llama.xcframework? They may exceed GitHub's 100MB file size limit if committed. (y/N): " reply
+if [[ $reply =~ ^[Yy]$ ]]; then
+  echo "Removing dSYMs folders and DebugSymbolsPath keys in Info.plist..."
+  rm -rf "$LLAMA_CPP_DIR"/llama.xcframework/*/dSYMs
+  INFO_PLIST="$LLAMA_CPP_DIR/llama.xcframework/Info.plist"
+  plutil -convert json -o - "$INFO_PLIST" | jq '.AvailableLibraries |= map(del(.DebugSymbolsPath))' | plutil -convert xml1 -o "$INFO_PLIST" -
+fi
 
 echo "Cleaning up downloaded file $DOWNLOAD_PATH..."
 rm "$DOWNLOAD_PATH"
 
-echo "Running Swift tests..."
-swift test
+read -r -p "Run Swift tests? Be aware that they initiate download of large model files. (y/N): " reply
+if [[ $reply =~ ^[Yy]$ ]]; then
+  echo "Running Swift tests..."
+  swift test
+else
+  echo "Skipping tests."
+fi
