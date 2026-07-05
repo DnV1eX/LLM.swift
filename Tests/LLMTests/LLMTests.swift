@@ -268,8 +268,7 @@ final class LLMTests {
     func testEncodingDecodingFromHuggingFaceModel() async throws {
         let bot = try await LLM(from: model)!
         let input = "have you heard of this so-called LLM.swift library?"
-        var tokens = await bot.core.encode(input)
-        tokens.removeLast()
+        let tokens = await bot.core.encode(input)
         var decoded = ""
         for token in tokens {
             decoded += await bot.core.decode(token)
