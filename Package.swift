@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 import PackageDescription
 import CompilerPluginSupport
 
@@ -18,8 +18,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "602.0.0-latest"),
-        .package(url: "https://github.com/apple/swift-testing.git", branch: "main"),
+        .package(url: "https://github.com/swiftlang/swift-syntax", "600.0.0"..<"606.0.0"),
         .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.1.0")
     ],
     targets: [
@@ -52,8 +51,7 @@ let package = Package(
             name: "LLMTests",
             dependencies: [
                 "LLM",
-                "LLMMacros",
-                .product(name: "Testing", package: "swift-testing")
+                "LLMMacros"
             ],
             path: "Tests/LLMTests"
         )

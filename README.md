@@ -229,14 +229,14 @@ public func respond(to input: String, with makeOutputFrom: @escaping (AsyncStrea
 
 open func respond(to input: String) async {
     await respond(to: input) { [self] response in
-        await setOutput(to: "")
+        setOutput(to: "")
         for await responseDelta in response {
             update(responseDelta)
-            await setOutput(to: output + responseDelta)
+            setOutput(to: output + responseDelta)
         }
         update(nil)
         let trimmedOutput = output.trimmingCharacters(in: .whitespacesAndNewlines)
-        await setOutput(to: trimmedOutput.isEmpty ? "..." : trimmedOutput)
+        setOutput(to: trimmedOutput.isEmpty ? "..." : trimmedOutput)
         return output
     }
 }
